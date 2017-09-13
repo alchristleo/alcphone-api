@@ -1,0 +1,1 @@
+This is the server side/back-end code of Alcphone created using ReactJS, Babel, nodejs with Express framework, MongoDB for database, mailtrap.io for mailer. For the client side/front-end code you can find it [here](https://github.com/alchristleo/alcphone-react)
