@@ -1,8 +1,8 @@
 import nodemailer from "nodemailer";
 
-const from = '"Alcphone" <info@alcphone.com>';
+const from = '"Bookworm" <info@bookworm.com>';
 
-function setup(){
+function setup() {
   return nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
@@ -11,20 +11,20 @@ function setup(){
       pass: process.env.EMAIL_PASS
     }
   });
-};
+}
 
-export function sendConfirmationEmail(user){
-  const transport = setup();
+export function sendConfirmationEmail(user) {
+  const tranport = setup();
   const email = {
     from,
     to: user.email,
-    subject: "Welcome to Alcphone",
+    subject: "Welcome to Bookworm",
     text: `
-    Welcome to Alcphone. Please, confirm your email.
+    Welcome to Bookworm. Please, confirm your email.
 
     ${user.generateConfirmationUrl()}
     `
-  }
+  };
 
-  transport.sendMail(email);
-};
+  tranport.sendMail(email);
+}
