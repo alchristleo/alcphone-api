@@ -16,6 +16,17 @@ router.post("/", (req, res) => {
   });
 });
 
+router.post("/admin", (req, res) => {
+  const { credentials } = req.body;
+  User.findOne({ email: credentials.email }).then(admin => {
+    if (admin && admin.isValidPassword(credentials.password)) {
+      res.json({ admin: admin.toAuthJSON() });
+    } else {
+      res.status(400).json({ errors: { global: "Invalid credentials" } });
+    }
+  });
+});
+
 router.post("/confirmation", (req, res) => {
   const token = req.body.token;
   User.findOneAndUpdate(
@@ -25,6 +36,18 @@ router.post("/confirmation", (req, res) => {
   ).then(
     user =>
       user ? res.json({ user: user.toAuthJSON() }) : res.status(400).json({})
+  );
+});
+
+router.post("/admin/confirmation", (req, res) => {
+  const token = req.body.token;
+  User.findOneAndUpdate(
+    { confirmationToken: token },
+    { confirmationToken: "", confirmed: true, admin: true },
+    { new: true }
+  ).then(
+    admin =>
+      admin ? res.json({ admin: admin.toAuthJSON() }) : res.status(400).json({})
   );
 });
 

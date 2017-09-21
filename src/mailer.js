@@ -29,6 +29,22 @@ export function sendConfirmationEmail(user) {
   tranport.sendMail(email);
 }
 
+export function sendAdminConfirmationEmail(admin) {
+  const tranport = setup();
+  const email = {
+    from,
+    to: admin.email,
+    subject: "Welcome to Alcphone",
+    text: `
+    Hello admin, please confirm your email to continue.
+
+    ${admin.generateAdminConfirmationUrl()}
+    `
+  };
+
+  tranport.sendMail(email);
+}
+
 export function sendResetPasswordEmail(user) {
   const tranport = setup();
   const email = {

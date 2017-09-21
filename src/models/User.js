@@ -15,7 +15,8 @@ const schema = new mongoose.Schema(
     },
     passwordHash: { type: String, required: true },
     confirmed: { type: Boolean, default: false },
-    confirmationToken: { type: String, default: "" }
+    confirmationToken: { type: String, default: "" },
+    admin: { type: Boolean, default: false }
   },
   { timestamps: true }
 );
@@ -34,6 +35,10 @@ schema.methods.setConfirmationToken = function setConfirmationToken() {
 
 schema.methods.generateConfirmationUrl = function generateConfirmationUrl() {
   return `${process.env.HOST}/confirmation/${this.confirmationToken}`;
+};
+
+schema.methods.generateAdminConfirmationUrl = function generateAdminConfirmationUrl() {
+  return `${process.env.HOST}/admin/confirmation/${this.confirmationToken}`;
 };
 
 schema.methods.generateResetPasswordLink = function generateResetPasswordLink(){
